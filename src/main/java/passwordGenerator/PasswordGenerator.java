@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import javafx.application.Application;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.stage.Stage;
 import javafx.util.converter.NumberStringConverter;
 import javafx.scene.Scene;
@@ -26,8 +27,10 @@ public class PasswordGenerator extends Application{
 	
 	public void start(Stage window) {
 		VBox layout = new VBox();
-		layout.setPrefSize(400, 400);
+		layout.setPrefSize(250, 300);
 		GridPane grid = new GridPane();
+		grid.setVgap(5);
+		grid.setPadding(new Insets(10, 10, 10, 10));
 		
 		Label lengthText = new Label("Length: ");
 		ComboBox length = new ComboBox();
@@ -35,14 +38,13 @@ public class PasswordGenerator extends Application{
 			length.getItems().add(i);
 		}
 		Label symbolsText = new Label("Symbols: ");
-		CheckBox symbols = new CheckBox("(!@#$%^&*;:,.<>-_+=)");
+		CheckBox symbols = new CheckBox("!@#$%^&*;:,.<>-_+=");
 		Label numbersText = new Label("Numbers: ");
-		CheckBox numbers = new CheckBox("(e.g. 0123456789)");
+		CheckBox numbers = new CheckBox("012345678");
 		Label lowercaseText = new Label("Lowercase Characters: ");
-		CheckBox lowercase = new CheckBox("(e.g. a-z)");
+		CheckBox lowercase = new CheckBox("a-z");
 		Label uppercaseText = new Label("Uppercase Characters: ");
-		CheckBox uppercase = new CheckBox("(e.g. A-Z)");
-		Label message = new Label();
+		CheckBox uppercase = new CheckBox("A-Z");
 		
 		grid.add(lengthText, 0, 0);
 		grid.add(length, 1, 0);
@@ -54,21 +56,25 @@ public class PasswordGenerator extends Application{
 		grid.add(lowercase, 1, 3);
 		grid.add(uppercaseText, 0, 4);
 		grid.add(uppercase, 1, 4);
-		grid.add(message, 1, 5);
 		
 		BorderPane pane = new BorderPane();
+		pane.setPadding(new Insets(10, 10, 10, 10));
 		
+		Label message = new Label();
+		pane.setTop(message);
+		pane.setMargin(message, new Insets(-10, 0, 0, 50));
 		Button generatePassword = new Button("Generate Password");
+		pane.setCenter(generatePassword);
+		pane.setMargin(generatePassword, new Insets(10, 10, 10, 10));
 			
 		HBox hBox = new HBox();
+		hBox.setSpacing(10);
 		Label passwordText = new Label("Password: ");
 		TextField password = new TextField();
 		Button copyPassword = new Button("Copy");
 		password.setEditable(false);
 		
 		hBox.getChildren().addAll(passwordText, password, copyPassword);
-		
-		pane.setCenter(generatePassword);
 		pane.setBottom(hBox);
 		
 		layout.getChildren().add(grid);
@@ -108,9 +114,10 @@ public class PasswordGenerator extends Application{
 			clipboard.setContent(content);
 		});
 		
-		Scene view = new Scene(layout, 600, 300);
+		Scene view = new Scene(layout, 300, 250);
 		window.setScene(view);
 		window.setTitle("Password Generator");
+		window.setResizable(false);
 		window.show();
 	}
 
